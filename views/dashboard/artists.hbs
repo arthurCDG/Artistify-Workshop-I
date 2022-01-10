@@ -12,15 +12,16 @@
         </tr>
     </thead>
     <tbody>
-    {{#each artists}}
-        <tr>
-            <td>{{this.picture}}</td>
-            <td>{{this.name}}</td>
-            <td>{{this.description}}</td>
-            <td>{{this.isBand}}</td>
-            <td><a href="/dashboard/artists/update/{{this._id}}"></a></td>
-            <td><a href="/dashboard/artists/delete/{{this._id}}"></a></td>
-        </tr>
-    {{/each}}
+        {{#each artists}}
+            <tr>
+                <td><img src="{{this.picture}}" alt="{{this.name}}"></td>
+                <td>{{this.name}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.isBand}}</td>
+                <td><a href="/dashboard/artists/update/{{this._id}}">Update</a></td>
+                <td><a href="/dashboard/artists/delete/{{this._id}}">Delete</a></td>
+            </tr>
+        {{/each}}
     </tbody>
 </table>
+
