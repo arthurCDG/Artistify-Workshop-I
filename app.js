@@ -1,7 +1,6 @@
 require("dotenv").config();
 require("./db/dbInit");
 
-
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
@@ -9,7 +8,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
-var artistsRouter = require("./routes/dashboard");
+var dashboardRouter = require("./routes/dashboard");
 
 var app = express();
 
@@ -24,7 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/dashboard", artistsRouter);
+app.use("/dashboard", dashboardRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -43,8 +42,7 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(3000, () => {
-	console.log("Server 🦆 at: http://localhost:3000");
+  console.log("Server 🦆 at: http://localhost:3000");
 });
-
 
 module.exports = app;
