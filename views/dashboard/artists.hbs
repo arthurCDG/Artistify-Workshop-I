@@ -1,0 +1,26 @@
+<h1>All artists</h1>
+
+<table>
+    <thead>
+        <tr>
+           <th>Picture</th>
+           <th>Name</th>
+           <th>Description</th>
+           <th>Band</th>
+           <th>Update</th>
+           <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{#each artists}}
+        <tr>
+            <td>{{this.picture}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.isBand}}</td>
+            <td><a href="/dashboard/artists/update/{{this._id}}"></a></td>
+            <td><a href="/dashboard/artists/delete/{{this._id}}"></a></td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
