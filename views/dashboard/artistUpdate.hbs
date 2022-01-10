@@ -5,10 +5,10 @@
     <input type="text" name="name" value="{{artist.name}}">
     <label for="isBand">This artist is a band</label>
         <select name="isBand">
-            {{#select artist.isBand}}
-            <option value="true">True</option>
-            <option value="false">False</option>
-            {{/select}}
+            
+            <option value="true"{{#if artist.isBand }} selected {{/if}}>True</option>
+            <option value="false" {{#unless artist.isBand }} selected {{/unless}} >False</option>
+     
         </select>
     <label for="description">Description</label>
     <input type="text" name="description" value="{{artist.description}}">

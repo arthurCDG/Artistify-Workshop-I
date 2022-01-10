@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const artistModel = require("../models/Artist.model");
+const uploader = require("../config/cloudinary/cloudinary.config");
 
 router.get("/artists", (req, res, next) => {
   artistModel
@@ -25,10 +26,17 @@ router.get("/createArtist", function (req, res, next) {
 //   }
 // });
 
-router.post("/createArtist", (req, res, next) => {
-  console.log(req.body);
+router.post("/createArtist", uploader.single("picture"), (req, res, next) => {
+  // artistModel
+  // .create({
+    // name: req.file.originalname,
+    // URL: req.file.path,
+  // })
+  console.log("this is the req body ===== ", req.body);
+  console.log("this is the req file path ===== ", req.file.path);
+  const {description, name, isBand} = req.body;
   artistModel
-    .create(req.body)
+    .create({description, name, isBand, picture: req.file.path})
     .then(res.redirect("/dashboard/artists"))
     .catch((err) => next(err));
 });
@@ -42,13 +50,15 @@ router.get("/artists/delete/:id", function (req, res, next) {
 });
 
 router.get("/artists/update/:id", function (req, res, next) {
+  console.log("update route");
   const id = req.params.id;
   artistModel
     .findById(id)
     .then((foundArtist) => {
+      console.log(foundArtist)
       res.render("dashboard/artistUpdate.hbs", { artist: foundArtist });
     })
-    .catch((error) => next(error));
+    .catch((error) => console.log(error));
 });
 
 router.post("/artists/update/:id", async function (req, res, next) {
@@ -63,6 +73,18 @@ router.post("/artists/update/:id", async function (req, res, next) {
   } catch (err) {
     next(err);
   }
+});
+
+// picture reprensents the file input's name in the form view
+router.post("/artists/upload-image", uploader.single("picture"), (req, res, next) => {
+  console.log(req.file); // an object returned by multer/cloudinary containing usefull infos.
+  artistModel
+    .create({
+      name: req.file.originalname,
+      URL: req.file.path,
+    })
+    .then((success) => res.redirect("/dashboard/artists"))
+    .catch(next);
 });
 
 module.exports = router;
